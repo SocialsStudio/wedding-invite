@@ -669,30 +669,6 @@ html {
   cursor: default;
 }
 
-.tap-instruction {
-  position: absolute;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: white;
-  font-size: 16px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  opacity: 0.9;
-  animation: fadeInOut 2s infinite;
-  z-index: 10;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-}
-
-@keyframes fadeInOut {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
-}
-
-.tap-instruction.hidden {
-  display: none;
-}
-
 body.video-playing {
   overflow: hidden;
 }
@@ -705,7 +681,6 @@ body.video-playing {
   <video id="introVideo" playsinline muted preload="auto" webkit-playsinline x-webkit-airplay="allow">
     <source src="https://socials-photos.b-cdn.net/Wedding%20envelope%20video/Shorten-intro-video.MP4" type="video/mp4">
   </video>
-  <div class="tap-instruction" id="tapInstruction">Tap to play</div>
 </div>
 
 <!-- Hero Section -->
@@ -737,8 +712,7 @@ body.video-playing {
 <!-- Countdown Section -->
 <section id="countdown" class="countdown-section section-padding">
   <div class="section-header" style="color: white;">
-    <h2 style="color: white;">Countdown</h2>
-    <p style="color: rgba(255,255,255,0.8);">To the most special day of our lives</p>
+    <h2 style="color: white;">The countdown begins</h2>
   </div>
   <div class="countdown-grid">
     <div class="countdown-item">
@@ -1048,7 +1022,6 @@ body.video-playing {
 document.addEventListener('DOMContentLoaded', function() {
   const videoIntro = document.getElementById('videoIntro');
   const introVideo = document.getElementById('introVideo');
-  const tapInstruction = document.getElementById('tapInstruction');
   
   // Prevent scrolling during video
   document.body.classList.add('video-playing');
@@ -1075,8 +1048,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     console.log('User tapped to play video');
     
-    // Hide tap instruction
-    tapInstruction.classList.add('hidden');
+    // Hide overlay cursor and mark as playing
     videoIntro.classList.add('playing');
     
     // Play the video
