@@ -630,6 +630,12 @@ footer .footer-date {
   .lightbox-next {
     right: 10px;
   }
+  
+  /* Venue section - stack on mobile */
+  .card > div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
 }
 
 /* Smooth scroll */
@@ -702,7 +708,6 @@ body.video-playing {
     <p class="hero-date">at the celebration of their marriage</p>
   </div>
   <div class="scroll-indicator" onclick="document.getElementById('countdown').scrollIntoView()">
-    <span>Confirm Your Attendance</span>
     <div class="scroll-arrow">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="m6 9 6 6 6-6"/>
@@ -714,24 +719,20 @@ body.video-playing {
 <!-- Countdown Section -->
 <section id="countdown" class="countdown-section section-padding">
   <div class="section-header" style="color: white;">
-    <h2 style="color: white;">The countdown begins</h2>
+    <h2 style="color: white;">See you in</h2>
   </div>
   <div class="countdown-grid">
     <div class="countdown-item">
+      <span class="countdown-number" id="months">0</span>
+      <span class="countdown-label">Months</span>
+    </div>
+    <div class="countdown-item">
+      <span class="countdown-number" id="weeks">0</span>
+      <span class="countdown-label">Weeks</span>
+    </div>
+    <div class="countdown-item">
       <span class="countdown-number" id="days">0</span>
       <span class="countdown-label">Days</span>
-    </div>
-    <div class="countdown-item">
-      <span class="countdown-number" id="hours">0</span>
-      <span class="countdown-label">Hours</span>
-    </div>
-    <div class="countdown-item">
-      <span class="countdown-number" id="minutes">0</span>
-      <span class="countdown-label">Minutes</span>
-    </div>
-    <div class="countdown-item">
-      <span class="countdown-number" id="seconds">0</span>
-      <span class="countdown-label">Seconds</span>
     </div>
   </div>
 </section>
@@ -739,26 +740,41 @@ body.video-playing {
 <!-- Details Section -->
 <section class="section-padding">
   <div class="section-header">
-    <h2>Wedding Details</h2>
-    <p>Everything you need to know</p>
+    <h2>Wedding Venue</h2>
   </div>
-  <div class="card" style="max-width: 700px; margin: 0 auto; text-align: center;">
-    <div style="width: 64px; height: 64px; margin: 0 auto 24px; border-radius: 50%; background: rgba(139, 154, 139, 0.2); display: flex; align-items: center; justify-content: center;">
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--sage-dark)" stroke-width="2">
-        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
-        <circle cx="12" cy="10" r="3"/>
-      </svg>
+  <div class="card" style="max-width: 900px; margin: 0 auto;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+      <!-- Venue Details -->
+      <div style="text-align: center;">
+        <div style="width: 64px; height: 64px; margin: 0 auto 24px; border-radius: 50%; background: rgba(139, 154, 139, 0.2); display: flex; align-items: center; justify-content: center;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--sage-dark)" stroke-width="2">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+        </div>
+        <h3 style="font-size: 24px; color: var(--sage-dark); margin-bottom: 16px;">
+          <a href="https://maps.app.goo.gl/z4SyU6eHXYSi1Pv49" target="_blank" style="color: var(--sage-dark); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--sage-dark)'">
+            Anantara Chiang Mai Resort
+          </a>
+        </h3>
+        <p style="color: rgba(0,0,0,0.7); margin-bottom: 8px;">123-1 Charoen Prathet Road</p>
+        <p style="color: rgba(0,0,0,0.7); margin-bottom: 24px;">Chiang Mai, Thailand</p>
+        <p style="display: flex; align-items: center; justify-content: center; gap: 8px; color: rgba(0,0,0,0.6);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          5:00 PM - 1:00 AM
+        </p>
+      </div>
+      
+      <!-- Map Image -->
+      <div style="text-align: center;">
+        <a href="https://maps.app.goo.gl/z4SyU6eHXYSi1Pv49" target="_blank">
+          <img src="https://socials-photos.b-cdn.net/Wedding%20envelope%20video/ChatGPT%20Image%20Jan%2025%2C%202026%2C%2002_42_08%20PM.png" alt="Venue Location Map" style="width: 100%; max-width: 400px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;" onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.1)'">
+        </a>
+      </div>
     </div>
-    <h3 style="font-size: 24px; color: var(--sage-dark); margin-bottom: 16px;">Anantara Chiang Mai Resort</h3>
-    <p style="color: rgba(0,0,0,0.7); margin-bottom: 8px;">123-1 Charoen Prathet Road</p>
-    <p style="color: rgba(0,0,0,0.7); margin-bottom: 24px;">Chiang Mai, Thailand</p>
-    <p style="display: flex; align-items: center; justify-content: center; gap: 8px; color: rgba(0,0,0,0.6);">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="12" cy="12" r="10"/>
-        <polyline points="12 6 12 12 16 14"/>
-      </svg>
-      5:00 PM - 1:00 AM
-    </p>
   </div>
 </section>
 
@@ -1120,18 +1136,19 @@ function updateCountdown() {
   const now = new Date().getTime();
   const distance = weddingDate - now;
 
+  // Calculate months, weeks, and days
   const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  const months = Math.floor(days / 30);
+  const remainingDaysAfterMonths = days % 30;
+  const weeks = Math.floor(remainingDaysAfterMonths / 7);
+  const remainingDays = remainingDaysAfterMonths % 7;
 
-  document.getElementById("days").textContent = days;
-  document.getElementById("hours").textContent = hours;
-  document.getElementById("minutes").textContent = minutes;
-  document.getElementById("seconds").textContent = seconds;
+  document.getElementById("months").textContent = months;
+  document.getElementById("weeks").textContent = weeks;
+  document.getElementById("days").textContent = remainingDays;
 
   if (distance < 0) {
-    document.getElementById("countdown").innerHTML = "<p style='text-align: center; font-size: 24px;'>The wedding day is here! 🎉</p>";
+    document.getElementById("countdown").innerHTML = "<p style='text-align: center; font-size: 24px; color: white;'>The wedding day is here! 🎉</p>";
   }
 }
 
