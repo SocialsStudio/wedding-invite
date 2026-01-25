@@ -1207,6 +1207,11 @@ document.addEventListener('DOMContentLoaded', function() {
       document.body.classList.remove('video-playing');
       // Scroll to top (hero section) after video ends
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      // Remove from DOM after transition
+      setTimeout(() => {
+        videoIntro.style.display = 'none';
+      }, 100);
     }, 1000);
   }
   
