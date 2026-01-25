@@ -839,6 +839,18 @@ body.video-playing {
 </style>
 </head>
 <body>
+<script>
+// CRITICAL: Immediate execution to prevent any scrolling before video
+(function() {
+  window.scrollTo(0, 0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+  // Clear hash from social media previews
+  if (window.location.hash) {
+    history.replaceState(null, null, window.location.pathname);
+  }
+})();
+</script>
 
 <!-- Video Intro Overlay -->
 <div class="video-intro-overlay" id="videoIntro">
@@ -1157,8 +1169,22 @@ body.video-playing {
 <script>
 // Video Intro Handler
 document.addEventListener('DOMContentLoaded', function() {
+  // Clear any URL hash to prevent auto-scrolling past video
+  if (window.location.hash) {
+    history.replaceState(null, null, window.location.pathname + window.location.search);
+  }
+  
   const videoIntro = document.getElementById('videoIntro');
   const introVideo = document.getElementById('introVideo');
+  
+  // CRITICAL: Always show video overlay on page load, even from social media links
+  videoIntro.style.display = 'flex';
+  videoIntro.style.opacity = '1';
+  videoIntro.style.visibility = 'visible';
+  videoIntro.classList.remove('hidden');
+  
+  // Force scroll to top on page load
+  window.scrollTo(0, 0);
   
   // Prevent scrolling during video
   document.body.classList.add('video-playing');
