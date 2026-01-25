@@ -798,16 +798,23 @@ body.video-playing {
   overflow: hidden;
 }
 
+/* Ensure main content is ready for smooth reveal */
+body.video-complete {
+  overflow: auto;
+}
+
 body.video-complete .hero-section {
-  animation: fadeIn 1.5s ease-out;
+  animation: fadeIn 2s ease-out forwards;
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
+    transform: scale(1.02);
   }
   to {
     opacity: 1;
+    transform: scale(1);
   }
 }
 
@@ -1218,21 +1225,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // Disable interaction during fade
     videoIntro.style.pointerEvents = 'none';
     
-    // Start fade out transition
-    videoIntro.style.transition = 'opacity 1.5s ease-out';
-    videoIntro.style.opacity = '0';
+    // Immediately show content beneath (before video fades)
+    document.body.classList.remove('video-playing');
+    document.body.classList.add('video-complete');
     
-    // Slight delay before showing content for smoother crossfade
-    setTimeout(() => {
-      // Remove overflow hidden to show content
-      document.body.classList.remove('video-playing');
-      document.body.classList.add('video-complete');
-      
-      // Remove video overlay after content is visible
-      setTimeout(() => {
-        videoIntro.style.display = 'none';
-      }, 1000);
-    }, 500);
+    // Small delay to ensure content is rendered, then fade out video
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        // Start video fade out
+        videoIntro.classList.add('hidden');
+        
+        // Remove video overlay from DOM after fade completes
+        setTimeout(() => {
+          videoIntro.style.display = 'none';
+        }, 1500); // Match CSS transition duration
+      });
+    });
   }
   
   // Function to start playing video
