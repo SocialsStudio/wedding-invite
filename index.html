@@ -961,21 +961,6 @@ body.video-playing {
   </div>
   <form class="rsvp-form card" onsubmit="handleSubmit(event)">
     <div class="form-group">
-      <label for="name">Full Name *</label>
-      <input type="text" id="name" required placeholder="Your name">
-    </div>
-    
-    <div class="form-group">
-      <label for="email">Email (optional)</label>
-      <input type="email" id="email" placeholder="your@email.com">
-    </div>
-    
-    <div class="form-group">
-      <label for="whatsapp">WhatsApp (optional)</label>
-      <input type="tel" id="whatsapp" placeholder="+66 12 345 6789">
-    </div>
-    
-    <div class="form-group">
       <label>Will you attend? *</label>
       <div class="radio-group">
         <label>
@@ -996,9 +981,23 @@ body.video-playing {
     </div>
     
     <div class="form-group" id="guestNamesGroup" style="display: none;">
-      <label for="guestNames">Guest Names</label>
-      <input type="text" id="guestNames" placeholder="Name of additional guest">
-      <p style="font-size: 12px; color: rgba(0,0,0,0.5); margin-top: 4px;">Please provide the name of your +1</p>
+      <label for="guestNames">Name of additional guest</label>
+      <input type="text" id="guestNames" placeholder="Guest name">
+    </div>
+    
+    <div class="form-group">
+      <label for="name">Your Full Name *</label>
+      <input type="text" id="name" required placeholder="Your name">
+    </div>
+    
+    <div class="form-group">
+      <label for="email">Email (optional)</label>
+      <input type="email" id="email" placeholder="your@email.com">
+    </div>
+    
+    <div class="form-group">
+      <label for="whatsapp">WhatsApp (optional)</label>
+      <input type="tel" id="whatsapp" placeholder="+66 12 345 6789">
     </div>
     
     <div class="form-group">
@@ -1158,7 +1157,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Countdown Timer
 function updateCountdown() {
-  const weddingDate = new Date("October 31, 2026 17:00:00").getTime();
+  const weddingDate = new Date("October 31, 2026 16:00:00").getTime();
   const now = new Date().getTime();
   const distance = weddingDate - now;
 
