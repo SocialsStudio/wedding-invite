@@ -1207,39 +1207,40 @@ document.addEventListener('DOMContentLoaded', function() {
   const musicToggle = document.getElementById('musicToggle');
   const playingIcon = musicToggle.querySelector('.music-playing');
   const mutedIcon = musicToggle.querySelector('.music-muted');
+  const videoIntro = document.getElementById('videoIntro');
+  const introVideo = document.getElementById('introVideo');
   let musicStarted = false;
 
   // Set volume to 35% for ambient background music
   backgroundMusic.volume = 0.35;
 
-  // Start music after video ends
-  const introVideo = document.getElementById('introVideo');
-  introVideo.addEventListener('ended', function() {
+  // Start music when user taps to play video (first interaction)
+  videoIntro.addEventListener('click', function startMusicOnInteraction() {
     if (!musicStarted) {
-      setTimeout(() => {
-        backgroundMusic.play()
-          .then(() => {
-            console.log('✓ Background music started');
-            musicStarted = true;
-          })
-          .catch(error => {
-            console.log('Background music autoplay blocked:', error.message);
-          });
-      }, 500);
+      // Start music immediately when user interacts
+      backgroundMusic.play()
+        .then(() => {
+          console.log('✓ Background music started on user interaction');
+          musicStarted = true;
+        })
+        .catch(error => {
+          console.log('Background music blocked:', error.message);
+        });
+      
+      // Remove this listener after first interaction
+      videoIntro.removeEventListener('click', startMusicOnInteraction);
     }
-  });
+  }, { once: true });
 
   // Music toggle button
-  musicToggle.addEventListener('click', function() {
+  musicToggle.addEventListener('click', function(e) {
+    e.stopPropagation(); // Prevent video interaction
+    
     if (backgroundMusic.paused) {
       backgroundMusic.play();
-      playingIcon.style.display = 'block';
-      mutedIcon.style.display = 'none';
       console.log('Music unmuted');
     } else {
       backgroundMusic.pause();
-      playingIcon.style.display = 'none';
-      mutedIcon.style.display = 'block';
       console.log('Music muted');
     }
   });
