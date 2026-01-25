@@ -1114,24 +1114,24 @@ document.addEventListener('DOMContentLoaded', function() {
   // Start first play attempt after a brief delay
   setTimeout(attemptPlay, 300);
   
-  // Longer timeout - give video more time to play, especially on mobile
-  // Only skip if video hasn't started after 15 seconds
+  // Safety timeout - only skip if video hasn't STARTED playing after 10 seconds
+  // (This only triggers if the video completely fails to load/play)
   setTimeout(() => {
     if (!videoStarted) {
-      console.log('✗ Video did not start within 15 seconds');
+      console.log('✗ Video did not start within 10 seconds - failed to load');
       console.log('Skipping to main website');
       hideVideo();
     }
-  }, 15000);
+  }, 10000);
   
-  // Maximum duration - if video is somehow still playing after 30 seconds, force hide
-  // (in case the 'ended' event doesn't fire)
+  // Maximum safety duration - only if video is somehow stuck after 60 seconds
+  // (This should never happen in normal circumstances)
   setTimeout(() => {
     if (!videoCompleted) {
-      console.log('Maximum video duration reached, forcing hide');
+      console.log('Maximum safety timeout reached after 60 seconds');
       hideVideo();
     }
-  }, 30000);
+  }, 60000);
 });
 
 // Countdown Timer
