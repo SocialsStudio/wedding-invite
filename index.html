@@ -658,6 +658,26 @@ footer .footer-date {
     font-size: 42px;
   }
   
+  /* Mobile countdown - stack vertically and make smaller */
+  .countdown-grid {
+    grid-template-columns: 1fr !important;
+    gap: 15px !important;
+    max-width: 200px !important;
+    margin: 0 auto !important;
+  }
+  
+  .countdown-item {
+    padding: 15px !important;
+  }
+  
+  .countdown-number {
+    font-size: 36px !important;
+  }
+  
+  .countdown-label {
+    font-size: 14px !important;
+  }
+  
   /* Countdown date and venue responsive */
   .countdown-section h2[style*="font-size: 48px"] {
     font-size: 32px !important;
@@ -814,7 +834,7 @@ body.video-playing {
 
 <!-- Video Intro Overlay -->
 <div class="video-intro-overlay" id="videoIntro">
-  <video id="introVideo" playsinline muted preload="auto" webkit-playsinline x-webkit-airplay="allow">
+  <video id="introVideo" playsinline muted preload="auto" webkit-playsinline x-webkit-airplay="allow" autoplay="false">
     <source src="https://socials-photos.b-cdn.net/Wedding%20envelope%20video/green-gold-invite.mp4" type="video/mp4">
   </video>
   <div class="tap-prompt" id="tapPrompt" style="display: none;">Tap to open</div>
@@ -875,15 +895,15 @@ body.video-playing {
   <div class="countdown-grid">
     <div class="countdown-item">
       <span class="countdown-number" id="months">0</span>
-      <span class="countdown-label">Months</span>
+      <span class="countdown-label" id="months-label">Months</span>
     </div>
     <div class="countdown-item">
       <span class="countdown-number" id="weeks">0</span>
-      <span class="countdown-label">Weeks</span>
+      <span class="countdown-label" id="weeks-label">Weeks</span>
     </div>
     <div class="countdown-item">
       <span class="countdown-number" id="days">0</span>
-      <span class="countdown-label">Days</span>
+      <span class="countdown-label" id="days-label">Days</span>
     </div>
   </div>
 </section>
@@ -934,22 +954,27 @@ body.video-playing {
       <div class="timeline-item">
         <div class="timeline-time">4:00 PM</div>
         <div class="timeline-title">Reception</div>
+        <div style="font-size: 14px; color: rgba(0,0,0,0.6); margin-top: 4px;">Light refreshments</div>
       </div>
       <div class="timeline-item">
         <div class="timeline-time">5:00 PM</div>
         <div class="timeline-title">Ceremony</div>
+        <div style="font-size: 14px; color: rgba(0,0,0,0.6); margin-top: 4px;">Vows exchanged</div>
       </div>
       <div class="timeline-item">
         <div class="timeline-time">6:00 PM</div>
-        <div class="timeline-title">Cocktails</div>
+        <div class="timeline-title">Sunset</div>
+        <div style="font-size: 14px; color: rgba(0,0,0,0.6); margin-top: 4px;">Drinks and photos</div>
       </div>
       <div class="timeline-item">
         <div class="timeline-time">7:00 PM</div>
         <div class="timeline-title">Dinner</div>
+        <div style="font-size: 14px; color: rgba(0,0,0,0.6); margin-top: 4px;">Evening dining</div>
       </div>
       <div class="timeline-item">
         <div class="timeline-time">8:00 PM</div>
-        <div class="timeline-title">Party</div>
+        <div class="timeline-title">Dancing</div>
+        <div style="font-size: 14px; color: rgba(0,0,0,0.6); margin-top: 4px;">Music and celebration</div>
       </div>
     </div>
   </div>
@@ -970,7 +995,7 @@ body.video-playing {
       </div>
       <div class="faq-answer">
         <p style="color: rgba(0,0,0,0.7); line-height: 1.6;">
-          Kindly RSVP by <strong>April 1st, 2026</strong> by completing the form below or by letting one of us know directly.
+          Kindly RSVP by <strong>April 1st, 2026</strong> by completing the form below or by letting Riyad or Alisa know directly.
         </p>
       </div>
     </div>
@@ -1027,9 +1052,10 @@ body.video-playing {
           <strong>• Colour palette:</strong> Green tones are encouraged<br>
           <strong>• Gentlemen:</strong> Black suits
         </p>
-        <p style="color: rgba(0,0,0,0.7); line-height: 1.6; margin-top: 12px;">
-          The day will be documented by a photographer, and the colour theme will help bring a harmonious look to the celebration. Kindly take a look at the <a href="#gallery" style="color: var(--gold); text-decoration: underline;">images here</a> for inspiration.
+        <p style="color: rgba(0,0,0,0.7); line-height: 1.6; margin-top: 12px; margin-bottom: 16px;">
+          The day will be documented by a photographer, and the colour theme will help bring a harmonious look to the celebration.
         </p>
+        <img src="https://socials-photos.b-cdn.net/Wedding%20envelope%20video/dress-code.jpg" alt="Dress code inspiration" style="width: 100%; border-radius: 8px; margin-top: 12px;">
       </div>
     </div>
 
@@ -1050,13 +1076,13 @@ body.video-playing {
     <div class="faq-item card" onclick="toggleFAQ(this)">
       <div class="faq-question">
         <h3 style="color: var(--sage-dark); font-size: 20px; margin-bottom: 0;">
-          Stay Longer
+          Make It a Trip
         </h3>
         <div class="faq-toggle">+</div>
       </div>
       <div class="faq-answer">
         <p style="color: rgba(0,0,0,0.7); line-height: 1.6;">
-          We would absolutely love for you to make a trip of it. If you wish to stay a little longer before or after the wedding, we would be delighted to spend more time together and share Chiang Mai with you.
+          We would absolutely love for you to make a trip of it. If you wish to stay a little longer before or after the wedding, we would be delighted to spend more time together and show you around Chiang Mai.
         </p>
       </div>
     </div>
@@ -1067,7 +1093,7 @@ body.video-playing {
 <section id="rsvp" class="section-padding">
   <div class="section-header">
     <h2>RSVP</h2>
-    <p>Kindly confirm your attendance before <strong>April 1st, 2026</strong></p>
+    <p>Kindly RSVP by <strong>April 1st, 2026</strong> by completing the form below or by letting Riyad or Alisa know directly.</p>
   </div>
   <form class="rsvp-form card" onsubmit="handleSubmit(event)">
     <div class="form-group">
@@ -1115,43 +1141,6 @@ body.video-playing {
     </button>
   </form>
 </section>
-
-<!-- Photo Gallery Section -->
-<section id="gallery" class="section-padding" style="background: white;">
-  <div class="section-header">
-    <h2>Dress Code Inspiration</h2>
-  </div>
-  <div class="gallery-grid">
-    <div class="gallery-item" onclick="openLightbox(0)">
-      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800" alt="Wedding photo 1">
-    </div>
-    <div class="gallery-item" onclick="openLightbox(1)">
-      <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800" alt="Wedding photo 2">
-    </div>
-    <div class="gallery-item" onclick="openLightbox(2)">
-      <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800" alt="Wedding photo 3">
-    </div>
-    <div class="gallery-item" onclick="openLightbox(3)">
-      <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800" alt="Wedding photo 4">
-    </div>
-    <div class="gallery-item" onclick="openLightbox(4)">
-      <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=800" alt="Wedding photo 5">
-    </div>
-    <div class="gallery-item" onclick="openLightbox(5)">
-      <img src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=800" alt="Wedding photo 6">
-    </div>
-  </div>
-</section>
-
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
-  <div class="lightbox-close" onclick="closeLightbox(event)">×</div>
-  <div class="lightbox-prev" onclick="changeImage(-1, event)">‹</div>
-  <div class="lightbox-content">
-    <img id="lightbox-img" src="" alt="Gallery image">
-  </div>
-  <div class="lightbox-next" onclick="changeImage(1, event)">›</div>
-</div>
 
 <!-- Footer -->
 <footer>
@@ -1341,6 +1330,11 @@ function updateCountdown() {
   document.getElementById("months").textContent = months;
   document.getElementById("weeks").textContent = weeks;
   document.getElementById("days").textContent = remainingDays;
+  
+  // Update labels for proper pluralization
+  document.getElementById("months-label").textContent = months === 1 ? "Month" : "Months";
+  document.getElementById("weeks-label").textContent = weeks === 1 ? "Week" : "Weeks";
+  document.getElementById("days-label").textContent = remainingDays === 1 ? "Day" : "Days";
 
   if (distance < 0) {
     document.getElementById("countdown").innerHTML = "<p style='text-align: center; font-size: 24px; color: white;'>The wedding day is here! 🎉</p>";
@@ -1349,62 +1343,6 @@ function updateCountdown() {
 
 updateCountdown();
 setInterval(updateCountdown, 1000);
-
-// Gallery Images Array
-const galleryImages = [
-  'https://images.unsplash.com/photo-519741497674-611481863552?w=800',
-  'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800',
-  'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800',
-  'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800',
-  'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=800',
-  'https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=800'
-];
-
-let currentImageIndex = 0;
-
-// Open Lightbox
-function openLightbox(index) {
-  currentImageIndex = index;
-  document.getElementById('lightbox-img').src = galleryImages[index];
-  document.getElementById('lightbox').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-
-// Close Lightbox
-function closeLightbox(event) {
-  if (event.target.id === 'lightbox' || event.target.classList.contains('lightbox-close')) {
-    document.getElementById('lightbox').classList.remove('active');
-    document.body.style.overflow = 'auto';
-  }
-}
-
-// Change Image in Lightbox
-function changeImage(direction, event) {
-  event.stopPropagation();
-  currentImageIndex += direction;
-  
-  if (currentImageIndex < 0) {
-    currentImageIndex = galleryImages.length - 1;
-  } else if (currentImageIndex >= galleryImages.length) {
-    currentImageIndex = 0;
-  }
-  
-  document.getElementById('lightbox-img').src = galleryImages[currentImageIndex];
-}
-
-// Keyboard navigation for lightbox
-document.addEventListener('keydown', function(event) {
-  const lightbox = document.getElementById('lightbox');
-  if (lightbox.classList.contains('active')) {
-    if (event.key === 'ArrowLeft') {
-      changeImage(-1, event);
-    } else if (event.key === 'ArrowRight') {
-      changeImage(1, event);
-    } else if (event.key === 'Escape') {
-      closeLightbox(event);
-    }
-  }
-});
 
 // FAQ Accordion Toggle
 function toggleFAQ(element) {
