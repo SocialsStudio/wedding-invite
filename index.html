@@ -651,6 +651,7 @@ html {
   opacity: 1;
   visibility: visible;
   transition: opacity 1s ease-out, visibility 1s;
+  cursor: pointer;
 }
 
 .video-intro-overlay.hidden {
@@ -664,6 +665,34 @@ html {
   object-fit: cover;
 }
 
+.video-intro-overlay.playing {
+  cursor: default;
+}
+
+.tap-instruction {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.9;
+  animation: fadeInOut 2s infinite;
+  z-index: 10;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.tap-instruction.hidden {
+  display: none;
+}
+
 body.video-playing {
   overflow: hidden;
 }
@@ -673,9 +702,10 @@ body.video-playing {
 
 <!-- Video Intro Overlay -->
 <div class="video-intro-overlay" id="videoIntro">
-  <video id="introVideo" playsinline autoplay muted preload="auto" webkit-playsinline x-webkit-airplay="allow">
+  <video id="introVideo" playsinline muted preload="auto" webkit-playsinline x-webkit-airplay="allow">
     <source src="https://socials-photos.b-cdn.net/Wedding%20envelope%20video/Wedding-intro.MP4" type="video/mp4">
   </video>
+  <div class="tap-instruction" id="tapInstruction">Tap to play</div>
 </div>
 
 <!-- Hero Section -->
@@ -1023,6 +1053,7 @@ body.video-playing {
 document.addEventListener('DOMContentLoaded', function() {
   const videoIntro = document.getElementById('videoIntro');
   const introVideo = document.getElementById('introVideo');
+  const tapInstruction = document.getElementById('tapInstruction');
   
   // Prevent scrolling during video
   document.body.classList.add('video-playing');
@@ -1043,6 +1074,36 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 1000);
   }
   
+  // Function to start playing video
+  function startVideo() {
+    if (videoStarted) return; // Prevent multiple calls
+    
+    console.log('User tapped to play video');
+    
+    // Hide tap instruction
+    tapInstruction.classList.add('hidden');
+    videoIntro.classList.add('playing');
+    
+    // Play the video
+    introVideo.play()
+      .then(() => {
+        videoStarted = true;
+        console.log('✓ Video playing after user interaction');
+      })
+      .catch(error => {
+        console.error('✗ Failed to play video:', error.message);
+        alert('Unable to play video. Continuing to website...');
+        hideVideo();
+      });
+  }
+  
+  // Click/tap anywhere on the video overlay to play
+  videoIntro.addEventListener('click', function(e) {
+    if (!videoStarted && !videoCompleted) {
+      startVideo();
+    }
+  });
+  
   // When video metadata loads
   introVideo.addEventListener('loadedmetadata', function() {
     console.log('✓ Video metadata loaded, duration:', introVideo.duration, 'seconds');
@@ -1055,10 +1116,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // When video starts playing successfully
   introVideo.addEventListener('playing', function() {
-    if (!videoStarted) {
-      videoStarted = true;
-      console.log('✓ Video is now playing!');
-    }
+    console.log('✓ Video is now playing!');
   });
   
   // When video ends, hide it
@@ -1069,7 +1127,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Load event
   introVideo.addEventListener('loadeddata', function() {
-    console.log('✓ Video data loaded');
+    console.log('✓ Video data loaded and ready');
   });
   
   // Error handler - if video fails to load
@@ -1078,60 +1136,13 @@ document.addEventListener('DOMContentLoaded', function() {
     if (error) {
       console.error('✗ Video error:', error.message, '| Code:', error.code);
     }
-    console.log('Skipping to main website due to error');
+    alert('Video failed to load. Continuing to website...');
     hideVideo();
   });
   
-  // Try to load and play the video
+  // Load the video (this will show the first frame)
   console.log('Loading video from CDN...');
   introVideo.load();
-  
-  // Multiple play attempts for better mobile compatibility
-  let playAttempts = 0;
-  const maxPlayAttempts = 3;
-  
-  function attemptPlay() {
-    playAttempts++;
-    console.log('Play attempt', playAttempts);
-    
-    introVideo.play()
-      .then(() => {
-        console.log('✓ Video playback initiated successfully');
-      })
-      .catch(error => {
-        console.error('✗ Play attempt', playAttempts, 'failed:', error.message);
-        
-        if (playAttempts < maxPlayAttempts) {
-          // Try again after a short delay
-          setTimeout(attemptPlay, 500);
-        } else {
-          console.log('All play attempts failed, skipping to main website');
-          hideVideo();
-        }
-      });
-  }
-  
-  // Start first play attempt after a brief delay
-  setTimeout(attemptPlay, 300);
-  
-  // Safety timeout - only skip if video hasn't STARTED playing after 10 seconds
-  // (This only triggers if the video completely fails to load/play)
-  setTimeout(() => {
-    if (!videoStarted) {
-      console.log('✗ Video did not start within 10 seconds - failed to load');
-      console.log('Skipping to main website');
-      hideVideo();
-    }
-  }, 10000);
-  
-  // Maximum safety duration - only if video is somehow stuck after 60 seconds
-  // (This should never happen in normal circumstances)
-  setTimeout(() => {
-    if (!videoCompleted) {
-      console.log('Maximum safety timeout reached after 60 seconds');
-      hideVideo();
-    }
-  }, 60000);
 });
 
 // Countdown Timer
