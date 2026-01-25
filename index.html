@@ -798,6 +798,16 @@ body.video-playing {
   overflow: hidden;
 }
 
+/* Hero section starts hidden, fades in after video */
+.hero-section {
+  opacity: 0;
+  transition: opacity 1.5s ease-in;
+}
+
+body.show-hero .hero-section {
+  opacity: 1;
+}
+
 /* Music Toggle Button */
 .music-toggle {
   position: fixed;
@@ -1200,19 +1210,19 @@ document.addEventListener('DOMContentLoaded', function() {
     if (videoCompleted) return; // Prevent multiple calls
     videoCompleted = true;
     
-    console.log('Hiding video overlay');
-    videoIntro.classList.add('hidden');
+    console.log('Hiding video and fading in hero');
     
-    setTimeout(() => {
-      document.body.classList.remove('video-playing');
-      // Scroll to top (hero section) after video ends
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      
-      // Remove from DOM after transition
-      setTimeout(() => {
-        videoIntro.style.display = 'none';
-      }, 100);
-    }, 1000);
+    // Instantly hide video (no fade)
+    videoIntro.style.display = 'none';
+    
+    // Remove overflow hidden to show content
+    document.body.classList.remove('video-playing');
+    
+    // Add class to trigger hero fade-in
+    document.body.classList.add('show-hero');
+    
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'auto' });
   }
   
   // Function to start playing video
