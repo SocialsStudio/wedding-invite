@@ -673,7 +673,7 @@ body.video-playing {
 
 <!-- Video Intro Overlay -->
 <div class="video-intro-overlay" id="videoIntro">
-  <video id="introVideo" playsinline muted preload="auto" webkit-playsinline>
+  <video id="introVideo" playsinline autoplay muted preload="auto" webkit-playsinline x-webkit-airplay="allow">
     <source src="https://socials-photos.b-cdn.net/Wedding%20envelope%20video/Wedding-intro.MP4" type="video/mp4">
   </video>
 </div>
@@ -1086,26 +1086,52 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log('Loading video from CDN...');
   introVideo.load();
   
-  setTimeout(() => {
+  // Multiple play attempts for better mobile compatibility
+  let playAttempts = 0;
+  const maxPlayAttempts = 3;
+  
+  function attemptPlay() {
+    playAttempts++;
+    console.log('Play attempt', playAttempts);
+    
     introVideo.play()
       .then(() => {
-        console.log('✓ Video playback initiated');
+        console.log('✓ Video playback initiated successfully');
       })
       .catch(error => {
-        console.error('✗ Autoplay prevented:', error.message);
-        console.log('Skipping to main website');
-        hideVideo();
+        console.error('✗ Play attempt', playAttempts, 'failed:', error.message);
+        
+        if (playAttempts < maxPlayAttempts) {
+          // Try again after a short delay
+          setTimeout(attemptPlay, 500);
+        } else {
+          console.log('All play attempts failed, skipping to main website');
+          hideVideo();
+        }
       });
-  }, 200);
+  }
   
-  // Timeout - if video hasn't started within 8 seconds, assume it failed
+  // Start first play attempt after a brief delay
+  setTimeout(attemptPlay, 300);
+  
+  // Longer timeout - give video more time to play, especially on mobile
+  // Only skip if video hasn't started after 15 seconds
   setTimeout(() => {
     if (!videoStarted) {
-      console.log('✗ Video did not start within 8 seconds');
+      console.log('✗ Video did not start within 15 seconds');
       console.log('Skipping to main website');
       hideVideo();
     }
-  }, 8000);
+  }, 15000);
+  
+  // Maximum duration - if video is somehow still playing after 30 seconds, force hide
+  // (in case the 'ended' event doesn't fire)
+  setTimeout(() => {
+    if (!videoCompleted) {
+      console.log('Maximum video duration reached, forcing hide');
+      hideVideo();
+    }
+  }, 30000);
 });
 
 // Countdown Timer
@@ -1205,7 +1231,7 @@ function toggleFAQ(element) {
 }
 
 // Google Sheets Integration
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzBRpKm3tF5vc3kT7syNC4sxc6sb5DxPFYVI1x3moFzbfWeC8xQKAZ7iKgFN4gkcsHW/exec'; // Replace with your actual Google Apps Script URL
+const SCRIPT_URL = 'YOUR_GOOGLE_SCRIPT_URL_HERE'; // Replace with your actual Google Apps Script URL
 
 async function handleSubmit(e) {
   e.preventDefault();
