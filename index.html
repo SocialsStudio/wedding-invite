@@ -747,13 +747,14 @@ html {
   justify-content: center;
   opacity: 1;
   visibility: visible;
-  transition: opacity 1s ease-out, visibility 1s;
+  transition: opacity 1.5s ease-out;
   cursor: pointer;
 }
 
 .video-intro-overlay.hidden {
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
 }
 
 .video-intro-overlay video {
@@ -793,6 +794,19 @@ html {
 
 body.video-playing {
   overflow: hidden;
+}
+
+body.video-complete .hero-section {
+  animation: fadeIn 1.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Music Toggle Button */
@@ -1199,20 +1213,22 @@ document.addEventListener('DOMContentLoaded', function() {
     
     console.log('Hiding video overlay and showing main content');
     
-    // Hide video overlay with fade out
-    videoIntro.classList.add('hidden');
+    // Start fade out transition
+    videoIntro.style.transition = 'opacity 1.5s ease-out';
+    videoIntro.style.opacity = '0';
     
-    // Immediately remove video-playing class to show content
-    document.body.classList.remove('video-playing');
-    
-    // Scroll to top (hero section) smoothly
+    // Slight delay before showing content for smoother crossfade
     setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      // Remove video overlay from DOM after transition
-      setTimeout(() => {
-        videoIntro.style.display = 'none';
-      }, 1000);
-    }, 100);
+      // Remove overflow hidden to show content
+      document.body.classList.remove('video-playing');
+      document.body.classList.add('video-complete');
+    }, 500);
+    
+    // After fade completes, remove video overlay
+    setTimeout(() => {
+      videoIntro.style.display = 'none';
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }, 1500);
   }
   
   // Function to start playing video
