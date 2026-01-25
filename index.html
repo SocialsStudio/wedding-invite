@@ -787,46 +787,34 @@ body.video-playing {
 <!-- Timeline Section -->
 <section class="section-padding">
   <div class="section-header">
-    <h2>Order of Events</h2>
-    <p>What we have planned for you</p>
+    <h2>Agenda</h2>
   </div>
   <div class="timeline">
     <div class="timeline-grid">
       <div class="timeline-item">
-        <div class="timeline-time">5:00 PM</div>
+        <div class="timeline-time">4:00 PM</div>
         <div class="timeline-icon">❤️</div>
-        <div class="timeline-title">Guest Arrival</div>
-        <p class="timeline-desc">Welcome reception</p>
+        <div class="timeline-title">Reception</div>
       </div>
       <div class="timeline-item">
-        <div class="timeline-time">5:30 PM</div>
-        <div class="timeline-icon">🍷</div>
-        <div class="timeline-title">Welcome Drinks</div>
-        <p class="timeline-desc">Cocktails & canapés</p>
+        <div class="timeline-time">5:00 PM</div>
+        <div class="timeline-icon">💒</div>
+        <div class="timeline-title">Ceremony</div>
       </div>
       <div class="timeline-item">
         <div class="timeline-time">6:00 PM</div>
-        <div class="timeline-icon">💒</div>
-        <div class="timeline-title">Ceremony</div>
-        <p class="timeline-desc">The special moment</p>
+        <div class="timeline-icon">🥂</div>
+        <div class="timeline-title">Cocktails</div>
       </div>
       <div class="timeline-item">
         <div class="timeline-time">7:00 PM</div>
-        <div class="timeline-icon">🥂</div>
-        <div class="timeline-title">Cocktail Hour</div>
-        <p class="timeline-desc">Drinks in the gardens</p>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-time">8:30 PM</div>
         <div class="timeline-icon">🍽️</div>
         <div class="timeline-title">Dinner</div>
-        <p class="timeline-desc">Wedding banquet</p>
       </div>
       <div class="timeline-item">
-        <div class="timeline-time">10:00 PM</div>
+        <div class="timeline-time">8:00 PM</div>
         <div class="timeline-icon">🎵</div>
         <div class="timeline-title">Dancing</div>
-        <p class="timeline-desc">Party all night!</p>
       </div>
     </div>
   </div>
@@ -841,10 +829,26 @@ body.video-playing {
 <!-- FAQ Section -->
 <section class="section-padding">
   <div class="section-header">
-    <h2>Frequently Asked Questions</h2>
-    <p>Everything you need to know</p>
+    <h2>Q&A</h2>
   </div>
   <div style="max-width: 800px; margin: 0 auto;">
+    <div class="faq-item card" style="margin-bottom: 20px;" onclick="toggleFAQ(this)">
+      <div class="faq-question">
+        <h3 style="color: var(--sage-dark); font-size: 20px; margin-bottom: 0;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          RSVP
+        </h3>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-answer">
+        <p style="color: rgba(0,0,0,0.7); line-height: 1.6;">
+          Kindly RSVP by <strong>April 1st, 2026</strong> by completing the form below or by letting one of us know directly.
+        </p>
+      </div>
+    </div>
+
     <div class="faq-item card" style="margin-bottom: 20px;" onclick="toggleFAQ(this)">
       <div class="faq-question">
         <h3 style="color: var(--sage-dark); font-size: 20px; margin-bottom: 0;">
@@ -852,13 +856,19 @@ body.video-playing {
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
             <polyline points="9 22 9 12 15 12 15 22"/>
           </svg>
-          Where should we stay?
+          Accommodation
         </h3>
         <div class="faq-toggle">+</div>
       </div>
       <div class="faq-answer">
         <p style="color: rgba(0,0,0,0.7); line-height: 1.6;">
-          There are many beautiful hotels and accommodations near the venue in Chiang Mai. We recommend booking as soon as possible as <strong>October is high season in Chiang Mai</strong> and places fill up quickly. Popular areas include the Old City, Riverside, and Nimman neighborhoods.
+          Chiang Mai offers a wide range of beautiful hotels and accommodations close to the venue. You can easily find options on Airbnb, Booking.com, and Agoda.
+        </p>
+        <p style="color: rgba(0,0,0,0.7); line-height: 1.6; margin-top: 12px;">
+          As <strong>October is high season</strong>, we recommend booking as early as possible, as rooms fill up quickly.
+        </p>
+        <p style="color: rgba(0,0,0,0.7); line-height: 1.6; margin-top: 12px;">
+          Popular areas to consider include the Night Bazaar, Old Town, Riverside, and Nimman neighborhoods. For convenience, we suggest staying within 15 minutes of the venue.
         </p>
       </div>
     </div>
@@ -872,13 +882,16 @@ body.video-playing {
             <path d="M12 11v6"/>
             <path d="M9 14h6"/>
           </svg>
-          How do we get around Chiang Mai?
+          Transportation
         </h3>
         <div class="faq-toggle">+</div>
       </div>
       <div class="faq-answer">
         <p style="color: rgba(0,0,0,0.7); line-height: 1.6;">
-          Chiang Mai has Grab (similar to Uber), which is the easiest and most affordable way to get around the city. Simply download the Grab app before your trip. Taxis and tuk-tuks are also available, but we recommend using Grab for convenience and transparent pricing.
+          Chiang Mai is easy to get around. We recommend using Grab (similar to Uber), which is convenient, affordable, and has transparent pricing—simply download the app before your trip.
+        </p>
+        <p style="color: rgba(0,0,0,0.7); line-height: 1.6; margin-top: 12px;">
+          Taxis and tuk-tuks are also widely available, and there is an airport taxi service that is easy to book upon arrival. You may also rent a car or motorbike if you have an international driving license.
         </p>
       </div>
     </div>
@@ -887,18 +900,43 @@ body.video-playing {
       <div class="faq-question">
         <h3 style="color: var(--sage-dark); font-size: 20px; margin-bottom: 0;">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2">
-            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            <path d="M12 20v-6M6 20V10M18 20V4"/>
           </svg>
-          Can I bring a plus one?
+          Dress Code
         </h3>
         <div class="faq-toggle">+</div>
       </div>
       <div class="faq-answer">
         <p style="color: rgba(0,0,0,0.7); line-height: 1.6;">
-          Each invitation allows for a maximum of 2 guests. Please let us know the name of your +1 when you RSVP so we can prepare accordingly.
+          To complement our wedding theme and the beautiful Chiang Mai setting, we kindly invite our guests to dress in the following tones:
+        </p>
+        <p style="color: rgba(0,0,0,0.7); line-height: 1.6; margin-top: 12px;">
+          <strong>• Ladies:</strong> Soft beige or sage green<br>
+          <strong>• Gentlemen:</strong> Classic black
+        </p>
+        <p style="color: rgba(0,0,0,0.7); line-height: 1.6; margin-top: 12px;">
+          Please see the photos below for inspiration on the color palette and style.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item card" style="margin-bottom: 20px;" onclick="toggleFAQ(this)">
+      <div class="faq-question">
+        <h3 style="color: var(--sage-dark); font-size: 20px; margin-bottom: 0;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2">
+            <path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6"/>
+            <path d="M2 7h20"/>
+            <path d="M12 22V7"/>
+            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+          </svg>
+          Gifts
+        </h3>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-answer">
+        <p style="color: rgba(0,0,0,0.7); line-height: 1.6;">
+          No need to bring anything—your company means the world to us.
         </p>
       </div>
     </div>
@@ -907,15 +945,16 @@ body.video-playing {
       <div class="faq-question">
         <h3 style="color: var(--sage-dark); font-size: 20px; margin-bottom: 0;">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2">
-            <path d="M12 20v-6M6 20V10M18 20V4"/>
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
           </svg>
-          What should we wear?
+          Stay a Little Longer
         </h3>
         <div class="faq-toggle">+</div>
       </div>
       <div class="faq-answer">
         <p style="color: rgba(0,0,0,0.7); line-height: 1.6;">
-          We kindly request our guests to wear <strong>beige or sage green</strong> to complement our wedding theme and the beautiful Chiang Mai setting. Think elegant garden party attire in these soft, natural tones.
+          We would absolutely love for you to make a trip of it. If you are able to stay a little longer before or after the wedding, we would be delighted to spend more time together and share Chiang Mai with you.
         </p>
       </div>
     </div>
@@ -931,8 +970,8 @@ body.video-playing {
 <!-- RSVP Section -->
 <section id="rsvp" class="section-padding">
   <div class="section-header">
-    <h2>Confirm Your Attendance</h2>
-    <p>Please confirm your attendance by <strong>August 31, 2026</strong> so we can finalize our arrangements with the venue and catering.</p>
+    <h2>RSVP</h2>
+    <p>Please confirm your attendance before <strong>April 1st, 2026</strong> so we can finalize our arrangements with the venue and catering.</p>
   </div>
   <form class="rsvp-form card" onsubmit="handleSubmit(event)">
     <div class="form-group">
