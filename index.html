@@ -764,7 +764,10 @@ body.video-playing {
             <circle cx="12" cy="12" r="10"/>
             <polyline points="12 6 12 12 16 14"/>
           </svg>
-          5:00 PM - 1:00 AM
+          Friday, 31 October 2026
+        </p>
+        <p style="display: flex; align-items: center; justify-content: center; gap: 8px; color: rgba(0,0,0,0.6); margin-top: 8px;">
+          4:00 PM onwards
         </p>
       </div>
       
@@ -908,14 +911,14 @@ body.video-playing {
       </div>
       <div class="faq-answer">
         <p style="color: rgba(0,0,0,0.7); line-height: 1.6;">
-          To complement our wedding theme and the beautiful Chiang Mai setting, we kindly invite our guests to dress in the following tones:
+          We'd love for everyone to dress up and feel their best for the day. The wedding will be formal, with a garden theme.
         </p>
         <p style="color: rgba(0,0,0,0.7); line-height: 1.6; margin-top: 12px;">
-          <strong>• Ladies:</strong> Soft beige or sage green<br>
-          <strong>• Gentlemen:</strong> Classic black
+          <strong>• Ladies:</strong> Green or beige dresses<br>
+          <strong>• Gentlemen:</strong> Black suits
         </p>
         <p style="color: rgba(0,0,0,0.7); line-height: 1.6; margin-top: 12px;">
-          Please see the photos below for inspiration on the color palette and style.
+          We'll have a photographer capturing lots of special moments, so coordinating with the theme will help everything come together nicely. Please see the photos below for inspiration.
         </p>
       </div>
     </div>
@@ -948,13 +951,13 @@ body.video-playing {
             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
             <circle cx="12" cy="10" r="3"/>
           </svg>
-          Stay a Little Longer
+          Stay Longer
         </h3>
         <div class="faq-toggle">+</div>
       </div>
       <div class="faq-answer">
         <p style="color: rgba(0,0,0,0.7); line-height: 1.6;">
-          We would absolutely love for you to make a trip of it. If you are able to stay a little longer before or after the wedding, we would be delighted to spend more time together and share Chiang Mai with you.
+          We would absolutely love for you to make a trip of it. If you wish to stay a little longer before or after the wedding, we would be delighted to spend more time together and share Chiang Mai with you.
         </p>
       </div>
     </div>
@@ -982,6 +985,11 @@ body.video-playing {
     <div class="form-group">
       <label for="email">Email (optional)</label>
       <input type="email" id="email" placeholder="your@email.com">
+    </div>
+    
+    <div class="form-group">
+      <label for="whatsapp">WhatsApp (optional)</label>
+      <input type="tel" id="whatsapp" placeholder="+66 12 345 6789">
     </div>
     
     <div class="form-group">
@@ -1030,8 +1038,7 @@ body.video-playing {
 <!-- Photo Gallery Section -->
 <section class="section-padding" style="background: white;">
   <div class="section-header">
-    <h2>Our Journey</h2>
-    <p>Memories we've captured together</p>
+    <h2>Wedding theme</h2>
   </div>
   <div class="gallery-grid">
     <div class="gallery-item" onclick="openLightbox(0)">
@@ -1070,8 +1077,9 @@ body.video-playing {
   <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" style="margin: 0 auto 20px;">
     <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
   </svg>
-  <p class="footer-names">Alisa & Riyad</p>
+  <p class="footer-names">Riyad & Alisa</p>
   <p class="footer-date">31 October 2026</p>
+  <p style="margin-top: 20px; opacity: 0.9; font-size: 16px; font-style: italic;">We can't wait to celebrate with you</p>
 </footer>
 
 <script>
@@ -1096,6 +1104,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     setTimeout(() => {
       document.body.classList.remove('video-playing');
+      // Scroll to top (hero section) after video ends
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 1000);
   }
   
@@ -1280,6 +1290,7 @@ async function handleSubmit(e) {
   const formData = {
     name: document.getElementById('name').value,
     email: document.getElementById('email').value,
+    whatsapp: document.getElementById('whatsapp').value,
     attendance: document.querySelector('input[name="attendance"]:checked').value,
     guests: document.getElementById('guests').value,
     guestNames: document.getElementById('guestNames').value,
@@ -1297,7 +1308,7 @@ async function handleSubmit(e) {
       body: JSON.stringify(formData)
     });
 
-    alert("Thank you! Your RSVP has been received. We look forward to celebrating with you!");
+    alert("Thank you for your RSVP! We look forward to celebrating with you.");
     e.target.reset();
   } catch (error) {
     console.error('Error:', error);
