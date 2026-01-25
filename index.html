@@ -704,6 +704,48 @@ html {
 body.video-playing {
   overflow: hidden;
 }
+
+/* Music Toggle Button */
+.music-toggle {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(139, 154, 139, 0.9);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.music-toggle:hover {
+  background: rgba(139, 154, 139, 1);
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+.music-toggle:active {
+  transform: scale(0.95);
+}
+
+.music-icon {
+  transition: opacity 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .music-toggle {
+    bottom: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+  }
+}
 </style>
 </head>
 <body>
@@ -714,6 +756,26 @@ body.video-playing {
     <source src="https://socials-photos.b-cdn.net/Wedding%20envelope%20video/Shorten-intro-video.MP4" type="video/mp4">
   </video>
 </div>
+
+<!-- Background Music -->
+<audio id="backgroundMusic" loop>
+  <source src="https://socials-photos.b-cdn.net/Wedding%20envelope%20video/wedding-on-air-145020.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Music Control Button -->
+<button id="musicToggle" class="music-toggle" aria-label="Toggle music">
+  <svg class="music-icon music-playing" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+    <path d="M9 18V5l12-2v13"/>
+    <circle cx="6" cy="18" r="3"/>
+    <circle cx="18" cy="16" r="3"/>
+  </svg>
+  <svg class="music-icon music-muted" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="display: none;">
+    <path d="M9 18V5l12-2v13"/>
+    <circle cx="6" cy="18" r="3"/>
+    <circle cx="18" cy="16" r="3"/>
+    <line x1="2" y1="2" x2="22" y2="22"/>
+  </svg>
+</button>
 
 <!-- Hero Section -->
 <section class="hero-section">
@@ -974,23 +1036,22 @@ body.video-playing {
     
     <div class="form-group">
       <label for="names">Full Name(s) *</label>
-      <input type="text" id="names" required placeholder="Your name (and guest name if applicable)">
-      <p style="font-size: 12px; color: rgba(0,0,0,0.5); margin-top: 4px;">If bringing a guest, include both names</p>
+      <input type="text" id="names" required placeholder="">
     </div>
     
     <div class="form-group">
       <label for="email">Email (optional)</label>
-      <input type="email" id="email" placeholder="your@email.com">
+      <input type="email" id="email" placeholder="">
     </div>
     
     <div class="form-group">
       <label for="whatsapp">WhatsApp (optional)</label>
-      <input type="tel" id="whatsapp" placeholder="+66 12 345 6789">
+      <input type="tel" id="whatsapp" placeholder="">
     </div>
     
     <div class="form-group">
       <label for="message">Message for the couple (optional)</label>
-      <textarea id="message" rows="3" placeholder="Write us a few words..."></textarea>
+      <textarea id="message" rows="3" placeholder=""></textarea>
     </div>
     
     <button type="submit" class="submit-btn">
@@ -1138,6 +1199,61 @@ document.addEventListener('DOMContentLoaded', function() {
   // Load the video (this will show the first frame)
   console.log('Loading video from CDN...');
   introVideo.load();
+});
+
+// Background Music Handler
+document.addEventListener('DOMContentLoaded', function() {
+  const backgroundMusic = document.getElementById('backgroundMusic');
+  const musicToggle = document.getElementById('musicToggle');
+  const playingIcon = musicToggle.querySelector('.music-playing');
+  const mutedIcon = musicToggle.querySelector('.music-muted');
+  let musicStarted = false;
+
+  // Set volume to 35% for ambient background music
+  backgroundMusic.volume = 0.35;
+
+  // Start music after video ends
+  const introVideo = document.getElementById('introVideo');
+  introVideo.addEventListener('ended', function() {
+    if (!musicStarted) {
+      setTimeout(() => {
+        backgroundMusic.play()
+          .then(() => {
+            console.log('✓ Background music started');
+            musicStarted = true;
+          })
+          .catch(error => {
+            console.log('Background music autoplay blocked:', error.message);
+          });
+      }, 500);
+    }
+  });
+
+  // Music toggle button
+  musicToggle.addEventListener('click', function() {
+    if (backgroundMusic.paused) {
+      backgroundMusic.play();
+      playingIcon.style.display = 'block';
+      mutedIcon.style.display = 'none';
+      console.log('Music unmuted');
+    } else {
+      backgroundMusic.pause();
+      playingIcon.style.display = 'none';
+      mutedIcon.style.display = 'block';
+      console.log('Music muted');
+    }
+  });
+
+  // Update icon based on music state
+  backgroundMusic.addEventListener('play', function() {
+    playingIcon.style.display = 'block';
+    mutedIcon.style.display = 'none';
+  });
+
+  backgroundMusic.addEventListener('pause', function() {
+    playingIcon.style.display = 'none';
+    mutedIcon.style.display = 'block';
+  });
 });
 
 // Countdown Timer
