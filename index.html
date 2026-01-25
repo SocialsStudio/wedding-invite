@@ -1213,6 +1213,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     console.log('Hiding video overlay and showing main content');
     
+    // Disable interaction during fade
+    videoIntro.style.pointerEvents = 'none';
+    
     // Start fade out transition
     videoIntro.style.transition = 'opacity 1.5s ease-out';
     videoIntro.style.opacity = '0';
@@ -1222,13 +1225,12 @@ document.addEventListener('DOMContentLoaded', function() {
       // Remove overflow hidden to show content
       document.body.classList.remove('video-playing');
       document.body.classList.add('video-complete');
+      
+      // Remove video overlay after content is visible
+      setTimeout(() => {
+        videoIntro.style.display = 'none';
+      }, 1000);
     }, 500);
-    
-    // After fade completes, remove video overlay
-    setTimeout(() => {
-      videoIntro.style.display = 'none';
-      window.scrollTo({ top: 0, behavior: 'auto' });
-    }, 1500);
   }
   
   // Function to start playing video
