@@ -738,6 +738,31 @@ html {
   cursor: default;
 }
 
+.tap-prompt {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 18px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  animation: fadeInOut 2s ease-in-out infinite;
+  z-index: 10;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.tap-prompt.visible {
+  opacity: 1;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
 body.video-playing {
   overflow: hidden;
 }
@@ -790,8 +815,9 @@ body.video-playing {
 <!-- Video Intro Overlay -->
 <div class="video-intro-overlay" id="videoIntro">
   <video id="introVideo" playsinline muted preload="auto" webkit-playsinline x-webkit-airplay="allow">
-    <source src="https://socials-photos.b-cdn.net/Wedding%20envelope%20video/Shorten-intro-video.MP4" type="video/mp4">
+    <source src="https://socials-photos.b-cdn.net/Wedding%20envelope%20video/green-gold-invite.mp4" type="video/mp4">
   </video>
+  <div class="tap-prompt" id="tapPrompt" style="display: none;">Tap to open</div>
 </div>
 
 <!-- Background Music -->
@@ -828,8 +854,7 @@ body.video-playing {
       <span class="ornament">✦</span>
       <span></span>
     </div>
-    <p class="hero-date">Request the pleasure of your company</p>
-    <p class="hero-date">at the celebration of their marriage</p>
+    <p class="hero-date">Invite you to celebrate their wedding</p>
   </div>
   <div class="scroll-indicator" onclick="document.getElementById('countdown').scrollIntoView()">
     <div class="scroll-arrow">
@@ -924,7 +949,7 @@ body.video-playing {
       </div>
       <div class="timeline-item">
         <div class="timeline-time">8:00 PM</div>
-        <div class="timeline-title">Dancing</div>
+        <div class="timeline-title">Party</div>
       </div>
     </div>
   </div>
@@ -996,14 +1021,14 @@ body.video-playing {
       </div>
       <div class="faq-answer">
         <p style="color: rgba(0,0,0,0.7); line-height: 1.6;">
-          We'd love for everyone to dress up and feel their best for the day. The wedding will be formal, with a garden theme.
+          We're excited to see everyone dressed for a day of celebration. The style of the wedding is formal, inspired by a garden setting.
         </p>
         <p style="color: rgba(0,0,0,0.7); line-height: 1.6; margin-top: 12px;">
-          <strong>• Ladies:</strong> Green or beige dresses<br>
+          <strong>• Colour palette:</strong> Green tones are encouraged<br>
           <strong>• Gentlemen:</strong> Black suits
         </p>
         <p style="color: rgba(0,0,0,0.7); line-height: 1.6; margin-top: 12px;">
-          We'll have a photographer capturing lots of special moments, so coordinating with the theme will help everything come together nicely. Please see the photos below for inspiration.
+          The day will be documented by a photographer, and the colour theme will help bring a harmonious look to the celebration. Kindly take a look at the <a href="#gallery" style="color: var(--gold); text-decoration: underline;">images here</a> for inspiration.
         </p>
       </div>
     </div>
@@ -1017,7 +1042,7 @@ body.video-playing {
       </div>
       <div class="faq-answer">
         <p style="color: rgba(0,0,0,0.7); line-height: 1.6;">
-          No need to bring anything—your company means the world to us.
+          No need to bring anything — your presence truly means the world to us.
         </p>
       </div>
     </div>
@@ -1092,9 +1117,9 @@ body.video-playing {
 </section>
 
 <!-- Photo Gallery Section -->
-<section class="section-padding" style="background: white;">
+<section id="gallery" class="section-padding" style="background: white;">
   <div class="section-header">
-    <h2>Wedding theme</h2>
+    <h2>Dress Code Inspiration</h2>
   </div>
   <div class="gallery-grid">
     <div class="gallery-item" onclick="openLightbox(0)">
@@ -1188,8 +1213,20 @@ document.addEventListener('DOMContentLoaded', function() {
   videoIntro.addEventListener('click', function(e) {
     if (!videoStarted && !videoCompleted) {
       startVideo();
+      // Hide tap prompt when user taps
+      const tapPrompt = document.getElementById('tapPrompt');
+      tapPrompt.style.display = 'none';
     }
   });
+  
+  // Show "Tap to open" message after 5 seconds if video hasn't started
+  setTimeout(() => {
+    if (!videoStarted && !videoCompleted) {
+      const tapPrompt = document.getElementById('tapPrompt');
+      tapPrompt.style.display = 'block';
+      tapPrompt.classList.add('visible');
+    }
+  }, 5000);
   
   // When video metadata loads
   introVideo.addEventListener('loadedmetadata', function() {
