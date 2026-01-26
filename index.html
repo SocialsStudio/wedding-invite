@@ -1472,6 +1472,7 @@ async function handleSubmit(e) {
   const originalText = submitBtn.textContent;
   submitBtn.textContent = 'Sending...';
   submitBtn.disabled = true;
+  submitBtn.style.background = '#8b9a8b';
 
   const formData = {
     names: document.getElementById('names').value,
@@ -1493,11 +1494,34 @@ async function handleSubmit(e) {
       body: JSON.stringify(formData)
     });
 
-    alert("Thank you for your RSVP! We look forward to celebrating with you.");
-    e.target.reset();
+    // Success feedback
+    submitBtn.textContent = '✓ Sent Successfully!';
+    submitBtn.style.background = '#4CAF50';
+    
+    // Show alert after visual feedback
+    setTimeout(() => {
+      alert("Thank you for your RSVP! 💍\n\nWe look forward to celebrating with you on October 31st, 2026!");
+      e.target.reset();
+      
+      // Reset button
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+      submitBtn.style.background = '';
+    }, 500);
+    
   } catch (error) {
     console.error('Error:', error);
-    alert("There was an error submitting your RSVP. Please try again or contact us directly.");
+    
+    // Error feedback
+    submitBtn.textContent = '✗ Error';
+    submitBtn.style.background = '#d32f2f';
+    
+    setTimeout(() => {
+      alert("There was an error submitting your RSVP. Please try again or contact us directly.");
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+      submitBtn.style.background = '';
+    }, 500);
   } finally {
     submitBtn.textContent = originalText;
     submitBtn.disabled = false;
