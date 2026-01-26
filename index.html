@@ -1069,7 +1069,10 @@ body.show-hero .hero-section {
       </div>
       <div class="faq-answer">
         <p style="color: rgba(0,0,0,0.7); line-height: 1.6;">
-          Chiang Mai is easy to get around. We recommend using Grab (similar to Uber), which is convenient, affordable, and has transparent pricing—simply download the app before your trip.
+          <strong>Flights:</strong> Good news for our international guests: Etihad operates direct flights to Chiang Mai, with no Bangkok transfer required.
+        </p>
+        <p style="color: rgba(0,0,0,0.7); line-height: 1.6; margin-top: 12px;">
+          <strong>Getting around:</strong> Chiang Mai is easy to get around. We recommend using Grab (similar to Uber), which is convenient, affordable, and has transparent pricing—simply download the app before your trip.
         </p>
         <p style="color: rgba(0,0,0,0.7); line-height: 1.6; margin-top: 12px;">
           Taxis and tuk-tuks are also widely available, and there is an airport taxi service that is easy to book upon arrival. You may also rent a car or motorbike if you have an international driving license.
@@ -1364,10 +1367,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // Set volume to 35% for ambient background music
   backgroundMusic.volume = 0.35;
 
-  // Start music when user taps to play video (first interaction)
-  videoIntro.addEventListener('click', function startMusicOnInteraction() {
+  // Function to start music on first user interaction
+  function startMusicOnInteraction() {
     if (!musicStarted) {
-      // Start music immediately when user interacts
       backgroundMusic.play()
         .then(() => {
           console.log('✓ Background music started on user interaction');
@@ -1377,18 +1379,33 @@ document.addEventListener('DOMContentLoaded', function() {
           console.log('Background music blocked:', error.message);
         });
       
-      // Remove this listener after first interaction
+      // Remove all listeners after first interaction
       videoIntro.removeEventListener('click', startMusicOnInteraction);
+      document.removeEventListener('click', startMusicOnInteraction);
+      document.removeEventListener('touchstart', startMusicOnInteraction);
     }
-  }, { once: true });
+  }
+
+  // Start music on video click
+  videoIntro.addEventListener('click', startMusicOnInteraction, { once: true });
+  
+  // Also start music on ANY click or touch (for social media opens)
+  document.addEventListener('click', startMusicOnInteraction, { once: true });
+  document.addEventListener('touchstart', startMusicOnInteraction, { once: true });
 
   // Music toggle button
   musicToggle.addEventListener('click', function(e) {
-    e.stopPropagation(); // Prevent video interaction
+    e.stopPropagation(); // Prevent triggering other click handlers
     
     if (backgroundMusic.paused) {
-      backgroundMusic.play();
-      console.log('Music unmuted');
+      backgroundMusic.play()
+        .then(() => {
+          musicStarted = true;
+          console.log('Music unmuted');
+        })
+        .catch(error => {
+          console.log('Music play failed:', error.message);
+        });
     } else {
       backgroundMusic.pause();
       console.log('Music muted');
