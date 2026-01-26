@@ -941,6 +941,10 @@ body.show-hero .hero-section {
       <span class="countdown-number" id="days">0</span>
       <span class="countdown-label" id="days-label">Days</span>
     </div>
+    <div class="countdown-item">
+      <span class="countdown-number" id="hours">0</span>
+      <span class="countdown-label" id="hours-label">Hours</span>
+    </div>
   </div>
 </section>
 
@@ -1409,21 +1413,24 @@ function updateCountdown() {
   const now = new Date().getTime();
   const distance = weddingDate - now;
 
-  // Calculate months, weeks, and days
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const months = Math.floor(days / 30);
-  const remainingDaysAfterMonths = days % 30;
+  // Calculate months, weeks, days, and hours
+  const totalDays = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const months = Math.floor(totalDays / 30);
+  const remainingDaysAfterMonths = totalDays % 30;
   const weeks = Math.floor(remainingDaysAfterMonths / 7);
   const remainingDays = remainingDaysAfterMonths % 7;
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
   document.getElementById("months").textContent = months;
   document.getElementById("weeks").textContent = weeks;
   document.getElementById("days").textContent = remainingDays;
+  document.getElementById("hours").textContent = hours;
   
   // Update labels for proper pluralization
   document.getElementById("months-label").textContent = months === 1 ? "Month" : "Months";
   document.getElementById("weeks-label").textContent = weeks === 1 ? "Week" : "Weeks";
   document.getElementById("days-label").textContent = remainingDays === 1 ? "Day" : "Days";
+  document.getElementById("hours-label").textContent = hours === 1 ? "Hour" : "Hours";
 
   if (distance < 0) {
     document.getElementById("countdown").innerHTML = "<p style='text-align: center; font-size: 24px; color: white;'>The wedding day is here! 🎉</p>";
